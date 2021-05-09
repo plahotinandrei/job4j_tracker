@@ -5,6 +5,23 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 public class PointTest {
+    @Test
+    public void when00To01Then1() {
+        Point a = new Point(0, 0);
+        Point b = new Point(0, 1);
+        double result = a.distance(b);
+        double expected = 1;
+        assertThat(result, closeTo(expected, 0.001));
+    }
+
+    @Test
+    public void when33To63Then3() {
+        Point a = new Point(3, 3);
+        Point b = new Point(6, 3);
+        double result = a.distance(b);
+        double expected = 3;
+        assertThat(result, closeTo(expected, 0.001));
+    }
 
     @Test
     public void when000To010Then1() {
