@@ -22,19 +22,4 @@ public class Programmer extends Engineer {
     public String getLanguage() {
         return this.language;
     }
-
-    public static void main(String[] args) {
-        Programmer programmer = new Programmer("Ivan", "Ivanov", "MGU", "03.01.1991");
-        String name = programmer.getName();
-        System.out.println("name: " + name);
-        programmer.toDesign();
-        programmer.writeCode();
-        Programmer javaProgrammer = new Programmer("Denis", "Petrov", "SpbGU", "02.05.1988", "Java");
-        name = programmer.getName();
-        System.out.println("name: " + name);
-        programmer.toDesign();
-        programmer.writeCode();
-        String language = javaProgrammer.getLanguage();
-        System.out.println("language: " + language);
-    }
 }

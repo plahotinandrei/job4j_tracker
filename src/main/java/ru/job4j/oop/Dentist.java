@@ -7,9 +7,4 @@ public class Dentist extends Doctor {
     public Dentist(String name, String surname, String education, String birthday) {
         super(name, surname, education, birthday);
     }
-
-    public static void main(String[] args) {
-        Dentist dentist = new Dentist();
-        dentist.toHeal();
-    }
 }
