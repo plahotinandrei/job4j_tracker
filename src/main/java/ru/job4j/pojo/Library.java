@@ -11,21 +11,21 @@ public class Library {
         books[1] = thinkingInJava;
         books[2] = headFirst;
         books[3] = theFinancier;
-        for (int i = 0; i < books.length; i++) {
-            System.out.println("Book name: " + books[i].getName());
-            System.out.println("pages: " + books[i].getCountPages());
+        for (Book book:books) {
+            System.out.println("Book name: " + book.getName());
+            System.out.println("pages: " + book.getCountPages());
         }
         Book temp = books[0];
         books[0] = books[3];
         books[3] = temp;
-        for (int i = 0; i < books.length; i++) {
-            System.out.println("Book name: " + books[i].getName());
-            System.out.println("pages: " + books[i].getCountPages());
+        for (Book book:books) {
+            System.out.println("Book name: " + book.getName());
+            System.out.println("pages: " + book.getCountPages());
         }
-        for (int i = 0; i < books.length; i++) {
-            if (books[i].getName().equals("Clean Code")) {
-                System.out.println("Book name: " + books[i].getName());
-                System.out.println("pages: " + books[i].getCountPages());
+        for (Book book:books) {
+            if ("Clean Code".equals(book.getName())) {
+                System.out.println("Book name: " + book.getName());
+                System.out.println("pages: " + book.getCountPages());
                 break;
             }
         }
