@@ -9,8 +9,8 @@ public class StartUI {
         Item firstItem = tracker.findById(1);
         Item secondItem = tracker.findById(2);
         Item thirdItem = tracker.findById(3);
-        System.out.println(firstItem.getName());
-        System.out.println(secondItem.getName());
-        System.out.println(thirdItem.getName());
+        System.out.println(firstItem);
+        System.out.println(secondItem);
+        System.out.println(thirdItem);
     }
 }
