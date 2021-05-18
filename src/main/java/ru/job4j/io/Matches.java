@@ -17,7 +17,11 @@ public class Matches {
                 count = count - matches;
                 System.out.println("На столе осталось " + count + " спичек");
             } else {
-                System.out.println("Нельзя брать столько спичек");
+                if (count - matches < 0) {
+                    System.out.println("Допутимое число спичек не более " + count);
+                } else {
+                    System.out.println("Допутимое число спичек от 1 до 3");
+                }
             }
         }
         if (!turn) {
