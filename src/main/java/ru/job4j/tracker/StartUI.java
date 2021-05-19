@@ -20,10 +20,7 @@ public class StartUI {
                 System.out.println("=== Show all items ====");
                 Item[] items = tracker.findAll();
                 for (Item item:items) {
-                    System.out.println("item: id = "
-                        + item.getId()
-                        + "; name = " + item.getName()
-                        + "; created = " + item.getCreated());
+                    System.out.println(item);
                 }
             } else if (select == 2) {
                 System.out.println("=== Edit item ====");
@@ -52,10 +49,7 @@ public class StartUI {
                 int id = Integer.valueOf(scanner.nextLine());
                 Item item = tracker.findById(id);
                 if (item != null) {
-                    System.out.println("item: id = "
-                        + item.getId()
-                        + "; name = " + item.getName()
-                        + "; created = " + item.getCreated());
+                    System.out.println(item);
                 } else {
                     System.out.println("Заявка с таким id не найдена");
                 }
@@ -68,10 +62,7 @@ public class StartUI {
                     System.out.println("Заявки с таким именем не найдены");
                 } else {
                     for (Item item:items) {
-                        System.out.println("item: id = "
-                            + item.getId()
-                            + "; name = " + item.getName()
-                            + "; created = " + item.getCreated());
+                        System.out.println(item);
                     }
                 }
             } else if (select == 6) {
