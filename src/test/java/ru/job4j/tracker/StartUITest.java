@@ -71,4 +71,57 @@ public class StartUITest {
                         + "0. Exit Program" + System.lineSeparator()
         ));
     }
+
+    @Test
+    public void whenFindAllItems() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Input in = new StubInput();
+        Item item1 = tracker.add(new Item("item 1"));
+        Item item2 = tracker.add(new Item("item 2"));
+        UserAction showAction = new ShowAction(out);
+        showAction.execute(in, tracker);
+        String expected = "=== Show all items ====" + System.lineSeparator()
+                + item1.toString() + System.lineSeparator()
+                + item2.toString() + System.lineSeparator();
+        assertThat(out.toString(), is(expected));
+    }
+
+    @Test
+    public void whenFindByNameItems() {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"item"}
+        );
+        Tracker tracker = new Tracker();
+        Item item1 = tracker.add(new Item("item"));
+        tracker.add(new Item("item 2"));
+        tracker.add(new Item("item 3"));
+        tracker.add(new Item("item 4"));
+        Item item2 = tracker.add(new Item("item"));
+        UserAction findByName = new FindByNameAction(out);
+        findByName.execute(in, tracker);
+        String expected = "=== Find items by name ====" + System.lineSeparator()
+                + item1.toString() + System.lineSeparator()
+                + item2.toString() + System.lineSeparator();
+        assertThat(out.toString(), is(expected));
+    }
+
+    @Test
+    public void whenFindByIdItems() {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"1"}
+        );
+        Tracker tracker = new Tracker();
+        Item item1 = tracker.add(new Item("item"));
+        tracker.add(new Item("item 2"));
+        tracker.add(new Item("item 3"));
+        tracker.add(new Item("item 4"));
+        UserAction findById = new FindByIdAction(out);
+        findById.execute(in, tracker);
+        String expected = "=== Find item by id ====" + System.lineSeparator()
+                + item1.toString() + System.lineSeparator();
+        assertThat(out.toString(), is(expected));
+    }
 }
