@@ -4,9 +4,6 @@ public class StubInput implements Input {
     private String[] answers;
     private int position = 0;
 
-    public StubInput() {
-    }
-
     public StubInput(String[] answers) {
         this.answers = answers;
     }
