@@ -66,9 +66,10 @@ public class StartUITest {
                 new Exit()
         };
         new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
         assertThat(out.toString(), is(
-                "Menu." + System.lineSeparator()
-                        + "0. Exit Program" + System.lineSeparator()
+                "Menu." + ln
+                        + "0. Exit Program" + ln
         ));
     }
 
@@ -86,15 +87,16 @@ public class StartUITest {
                 new Exit()
         };
         new StartUI(out).init(in, tracker, actions);
-        String expected = "Menu." + System.lineSeparator()
-                + "0. Show all items" + System.lineSeparator()
-                + "1. Exit Program" + System.lineSeparator()
-                + "=== Show all items ====" + System.lineSeparator()
-                + item1.toString() + System.lineSeparator()
-                + item2.toString() + System.lineSeparator()
-                + "Menu." + System.lineSeparator()
-                + "0. Show all items" + System.lineSeparator()
-                + "1. Exit Program" + System.lineSeparator();
+        String ln = System.lineSeparator();
+        String expected = "Menu." + ln
+                + "0. Show all items" + ln
+                + "1. Exit Program" + ln
+                + "=== Show all items ====" + ln
+                + item1 + ln
+                + item2 + ln
+                + "Menu." + ln
+                + "0. Show all items" + ln
+                + "1. Exit Program" + ln;
         assertThat(out.toString(), is(expected));
     }
 
@@ -115,42 +117,44 @@ public class StartUITest {
                 new Exit()
         };
         new StartUI(out).init(in, tracker, actions);
-        String expected = "Menu." + System.lineSeparator()
-                + "0. Find items by name" + System.lineSeparator()
-                + "1. Exit Program" + System.lineSeparator()
-                + "=== Find items by name ====" + System.lineSeparator()
-                + item1.toString() + System.lineSeparator()
-                + item2.toString() + System.lineSeparator()
-                + "Menu." + System.lineSeparator()
-                + "0. Find items by name" + System.lineSeparator()
-                + "1. Exit Program" + System.lineSeparator();
+        String ln = System.lineSeparator();
+        String expected = "Menu." + ln
+                + "0. Find items by name" + ln
+                + "1. Exit Program" + ln
+                + "=== Find items by name ====" + ln
+                + item1 + ln
+                + item2 + ln
+                + "Menu." + ln
+                + "0. Find items by name" + ln
+                + "1. Exit Program" + ln;
         assertThat(out.toString(), is(expected));
     }
 
     @Test
     public void whenFindByIdItems() {
         Output out = new StubOutput();
-        Input in = new StubInput(
-                new String[] {"0", "1", "1"}
-        );
         Tracker tracker = new Tracker();
         Item item1 = tracker.add(new Item("item"));
         tracker.add(new Item("item 2"));
         tracker.add(new Item("item 3"));
         tracker.add(new Item("item 4"));
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(item1.getId()), "1"}
+        );
         UserAction[] actions = {
                 new FindByIdAction(out),
                 new Exit()
         };
         new StartUI(out).init(in, tracker, actions);
-        String expected = "Menu." + System.lineSeparator()
-                + "0. Find item by id" + System.lineSeparator()
-                + "1. Exit Program" + System.lineSeparator()
-                + "=== Find item by id ====" + System.lineSeparator()
-                + item1.toString() + System.lineSeparator()
-                + "Menu." + System.lineSeparator()
-                + "0. Find item by id" + System.lineSeparator()
-                + "1. Exit Program" + System.lineSeparator();
+        String ln = System.lineSeparator();
+        String expected = "Menu." + ln
+                + "0. Find item by id" + ln
+                + "1. Exit Program" + ln
+                + "=== Find item by id ====" + ln
+                + item1 + ln
+                + "Menu." + ln
+                + "0. Find item by id" + ln
+                + "1. Exit Program" + ln;
         assertThat(out.toString(), is(expected));
     }
 }
