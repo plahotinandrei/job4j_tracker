@@ -40,7 +40,6 @@ public class ItemTest {
         List<Item> expect = Arrays.asList(
                 item2, item3, item4, item1
         );
-        System.out.println(items);
         assertThat(items, is(expect));
     }
 }
