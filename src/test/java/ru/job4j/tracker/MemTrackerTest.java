@@ -8,7 +8,7 @@ import static org.hamcrest.core.IsNull.nullValue;
 public class MemTrackerTest {
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
-        MemTracker tracker = new MemTracker();
+        Store tracker = new MemTracker();
         Item item = new Item();
         item.setName("test1");
         tracker.add(item);
@@ -18,7 +18,7 @@ public class MemTrackerTest {
 
     @Test
     public void whenReplace() {
-        MemTracker tracker = new MemTracker();
+        Store tracker = new MemTracker();
         Item bug = new Item();
         bug.setName("Bug");
         tracker.add(bug);
@@ -31,7 +31,7 @@ public class MemTrackerTest {
 
     @Test
     public void whenDelete() {
-        MemTracker tracker = new MemTracker();
+        Store tracker = new MemTracker();
         Item bug = new Item();
         bug.setName("Bug");
         tracker.add(bug);
