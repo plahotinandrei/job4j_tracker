@@ -129,10 +129,14 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     private Item resultSetToItem(ResultSet rs) throws SQLException {
-        return new Item(
-                rs.getInt(1),
-                rs.getString(2),
-                rs.getTimestamp(3).toLocalDateTime()
-        );
+        Item item = null;
+        if (rs.next()) {
+            item = new Item(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getTimestamp(3).toLocalDateTime()
+            );
+        }
+        return item;
     }
 }
