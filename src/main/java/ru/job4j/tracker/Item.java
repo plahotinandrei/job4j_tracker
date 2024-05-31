@@ -1,9 +1,13 @@
 package ru.job4j.tracker;
 
 import lombok.*;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+@Entity
+@Table(name = "items")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -12,6 +16,8 @@ import java.time.temporal.ChronoUnit;
 @EqualsAndHashCode(exclude = {"created"})
 public class Item implements Comparable<Item> {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
