@@ -37,7 +37,7 @@ public class StartUI {
                 output,
                 new ConsoleInput()
         );
-        Store tracker = new MemTracker();
+        Store tracker = new HbmTracker();
         List<UserAction> actions = List.of(
                 new CreateAction(output),
                 new ReplaceAction(output),
