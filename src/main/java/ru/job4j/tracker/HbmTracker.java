@@ -1,12 +1,12 @@
 package ru.job4j.tracker;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class HbmTracker implements Store, AutoCloseable {
 
@@ -14,118 +14,48 @@ public class HbmTracker implements Store, AutoCloseable {
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
+    private final CrudRepository crudRepository = new CrudRepository(sf);
 
     @Override
     public Item add(Item item) {
-        sf.getCurrentSession();
-        Session session = sf.openSession();
-        try {
-            session.beginTransaction();
-            int id = (int) session.save(item);
-            item.setId(id);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
+        int id = crudRepository.tx((session) -> (int) session.save(item));
+        item.setId(id);
         return item;
     }
 
     @Override
     public boolean replace(int id, Item item) {
-        boolean rsl = false;
-        Session session = sf.openSession();
-        try {
-            session.beginTransaction();
-            rsl = session.createQuery(
-                            "UPDATE Item SET name = :name, created = :created WHERE id = :id")
-                    .setParameter("id", id)
-                    .setParameter("name", item.getName())
-                    .setParameter("created", item.getCreated())
-                    .executeUpdate() > 0;
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return rsl;
+        return crudRepository.run(
+                "UPDATE Item SET name = :name, created = :created WHERE id = :id",
+                Map.of("id", id, "name", item.getName(), "created", item.getCreated())
+        );
     }
 
     @Override
     public boolean delete(int id) {
-        boolean rsl = false;
-        Session session = sf.openSession();
-        try {
-            session.beginTransaction();
-            rsl = session.createQuery(
-                            "DELETE Item WHERE id = :id")
-                    .setParameter("id", id)
-                    .executeUpdate() > 0;
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return rsl;
+        return crudRepository.run("DELETE Item WHERE id = :id", Map.of("id", id));
     }
 
     @Override
     public List<Item> findAll() {
-        List<Item> items = List.of();
-        Session session = sf.openSession();
-        try {
-            session.beginTransaction();
-            Query<Item> query = session.createQuery(
-                    "from Item", Item.class);
-            items = query.getResultList();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return items;
+        return crudRepository.query("FROM Item", Item.class);
     }
 
     @Override
     public List<Item> findByName(String key) {
-        List<Item> items = List.of();
-        Session session = sf.openSession();
-        try {
-            session.beginTransaction();
-            Query<Item> query = session.createQuery(
-                    "FROM Item AS i WHERE i.name = :name", Item.class);
-            query.setParameter("name", key);
-            items = query.getResultList();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return items;
+        return crudRepository.query(
+                "FROM Item AS i WHERE i.name = :name",
+                Item.class, Map.of("name", key)
+        );
     }
 
     @Override
     public Item findById(int id) {
-        Item item = null;
-        Session session = sf.openSession();
-        try {
-            session.beginTransaction();
-            Query<Item> query = session.createQuery(
-                    "FROM Item AS i WHERE i.id = :id", Item.class);
-            query.setParameter("id", id);
-            item = query.uniqueResult();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return item;
+        Optional<Item> itemOptional = crudRepository.optional(
+                "FROM Item AS i WHERE i.id = :id",
+                Item.class, Map.of("id", id)
+        );
+        return itemOptional.orElse(null);
     }
 
     @Override
